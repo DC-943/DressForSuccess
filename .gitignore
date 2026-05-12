@@ -1,0 +1,46 @@
+# --- Dependencies (Shared by Node.js & React) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Frontend (React) ---
+frontend/build/
+frontend/dist/
+frontend/.eslintcache
+frontend/coverage/
+
+# --- Backend (Node.js) ---
+backend/dist/
+backend/logs/
+backend/*.log
+backend/*.sqlite
+
+# --- Environment Variables (Crucial for security) ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env*
+backend/.env*
+
+# --- Editor and System Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# --- Specific Files from your Image ---
+# Word temporary files
+~$*.docx
+# Design documents
+*.docx
+# Temporary JSON data
+chat.json
+swagger_temp.json
