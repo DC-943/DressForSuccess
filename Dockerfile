@@ -1,32 +1,22 @@
-# --- 阶段 1: 构建前端 (Vite) ---
-FROM node:22-alpine AS build-frontend
-WORKDIR /app/frontend
-# 复制前端配置文件
-COPY frontend/package*.json ./
-RUN npm install
-# 复制所有前端源码并打包
-COPY frontend/ ./
-RUN npm run build
-
 # --- 阶段 2: 运行后端服务器 ---
 FROM node:22-alpine
+# 安装构建原生模块所需的工具（SQLite 需要重新编译）
+RUN apk add --no-cache python3 make g++ 
+
 WORKDIR /app
 
-# 安装后端依赖
+# 1. 先复制 package.json
 COPY backend/package*.json ./backend/
+
+# 2. 在容器内编译安装（这会生成适合 Linux 的 sqlite3 二进制文件）
 RUN cd backend && npm install --production
 
-# 复制后端源码
+# 3. 复制后端源码（因为有 .dockerignore，所以不会复制本地错误的 node_modules）
 COPY backend/ ./backend/
 
-# 将阶段 1 生成的 dist 文件夹复制到后端的静态资源目录
-# 注意：你需要确保后端 server.js 中配置了静态托管这个目录
+# 4. 复制前端构建产物
 COPY --from=build-frontend /app/frontend/dist ./backend/public
 
-# 设置环境变量（可选）
-ENV PORT=8080
 EXPOSE 8080
-
-# 启动后端
 WORKDIR /app/backend
 CMD ["node", "server.js"]
