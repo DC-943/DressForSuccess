@@ -20,7 +20,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3001',
+        url: 'http://localhost:8080',
         description: 'Development server',
       },
     ],
@@ -44,7 +44,7 @@ app.get('/swagger.json', (req, res) => {
   res.send(swaggerSpec);
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
