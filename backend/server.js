@@ -1,4 +1,9 @@
-require('dotenv').config();
+try{
+  require('dotenv').config();
+}catch(e)
+{
+  console.warn('No .env file found, using environment variables from system');
+}
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
