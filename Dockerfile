@@ -1,5 +1,5 @@
 # --- 阶段 1: 构建前端 (Vite) ---
-FROM node:18-alpine AS build-frontend
+FROM node:22-alpine AS build-frontend
 WORKDIR /app/frontend
 # 复制前端配置文件
 COPY frontend/package*.json ./
