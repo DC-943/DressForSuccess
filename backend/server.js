@@ -13,7 +13,8 @@ const db = require('./database');
 const path = require('path');
 
 const app = express();
-
+// 1. 托管静态文件 (指向刚才 Docker 复制过来的 public 目录)
+app.use(express.static(path.join(__dirname, 'public')))
 // Swagger configuration
 const swaggerOptions = {
   definition: {
@@ -1549,7 +1550,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // 这一行是为了兼容 React 的路由，确保刷新页面不报 404
 app.get('/*path', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 
