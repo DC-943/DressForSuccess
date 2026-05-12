@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const db = require('./database');
+const path = require('path');
 
 const app = express();
 
@@ -1537,6 +1538,15 @@ app.get('/api/dashboard/client-progress', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
+
+// 告诉 Express 去哪里找静态网页文件
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// 这一行是为了兼容 React 的路由，确保刷新页面不报 404
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 
 // Start server
 app.listen(PORT, () => {
